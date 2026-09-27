@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str | None = None
     DATABASE_URL_SYNC: str | None = None
 
-    APP_NAME: str = "기억공간 - Gieok Gonggan"
+    APP_NAME: str = "Ideiateca API"
     DEBUG: bool = False
     ENV: str = "development"
     SECRET_KEY: str
@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     CORS_ALLOWED_ORIGINS: str = "http://localhost:3000"
 
     model_config = SettingsConfigDict(
-        env_file=".env" if not IS_PRODUCTION else None,
+        env_file=".env.developement" if not IS_PRODUCTION else None,
         env_file_encoding="utf-8",
         extra="ignore",
     )
