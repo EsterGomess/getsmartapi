@@ -1,7 +1,7 @@
 
-# 기억공간 - Gieok Gonggan API
+# Ideiateca API
 
-This is the backend API for the Gieok Gonggan application — an MVP project developed
+This is the backend API for the Ideiateca application — an MVP project developed
 for a graduate program at PUC-Rio.
 
 The application organizes and retains knowledge using the **Zettelkasten** method
@@ -32,7 +32,7 @@ link (graph) operations.
 ## Overview and Structure
 
 ```text
-gieokgonggan/                          ← backend root
+Ideiateca/                                ← backend root
 ├── app/                               ← FastAPI source code
 │   ├── api/routers/v1/                ← HTTP routes
 │   ├── core/                          ← security, config
@@ -70,10 +70,10 @@ gieokgonggan/                          ← backend root
 
 ## Environment Variables
 
-Create a `.env` file at the project root based on `.env.example`:
+Create a `.env.developement` file at the project root based on `.env.example`:
 
 ```bash
-cp .env.example .env
+cp .env.developement.example .env.developement
 ```
 
 Available settings:
@@ -95,7 +95,7 @@ Available settings:
 | `GEMINI_API_KEY` | Google Gemini API key (used by the AI suggestion feature) | - |
 | `ENV` | Environment name (`development` / `production`) | `development` |
 
-> ⚠️ **Note:** The `.env` file is not copied into the Docker image for security reasons
+> ⚠️ **Note:** The `.env.developement` file is not copied into the Docker image for security reasons
 > (listed in `.dockerignore`). In production/Docker, pass the variables through
 > `docker-compose` or the command line.
 
@@ -242,10 +242,10 @@ To run the API directly via the Docker CLI:
 
 ```bash
 # Build the image
-docker build -t gieok-gonggan-api .
+docker build -t ideiateca-api .
 
 # Run the container (requires an external Postgres)
-docker run -p 8000:8000 --env-file .env gieok-gonggan-api
+docker run -p 8000:8000 --env-file .env.developement ideiateca-api
 ```
 
 ---
