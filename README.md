@@ -371,3 +371,6 @@ The API uses **two independent JWT layers**:
                Authorization: Bearer <api_client_token>
                X-User-Token:  <user_token>
              ← { items, total, page, ... }
+```
+             
+<img width="1495" height="1060" alt="diagram" src="https://github.com/user-attachments/assets/b3773141-8d86-44d1-b507-f679a107708a" />
