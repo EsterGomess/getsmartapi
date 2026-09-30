@@ -3,7 +3,9 @@ from app.services.auth import authenticate_api_client, authenticate_user
 from app.services.user import (
     register_user,
     login_user,
-    change_user_email
+    change_user_email,
+    request_password_reset,
+    reset_user_password
 )
 from app.services.note import (
     create_note_for_user,
@@ -15,7 +17,7 @@ from app.services.note import (
     get_note_graph
 )
 from app.services.notes_ai import suggest_connections
-from app.services.password_reset import request_password_reset, reset_user_password
+
 __all__ = [
     "authenticate_api_client",
     "authenticate_user",
