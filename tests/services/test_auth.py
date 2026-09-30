@@ -69,7 +69,11 @@ class TestAuthenticate:
 )
 async def test_authenticates_with_a_real_password_hash(db, function, model):
     password = "correct horse battery staple"
-    entity = model(username="alice", hashed_password=get_password_hash(password))
+    entity = model(
+        username="alice",
+        email="alice@example.com",
+        hashed_password=get_password_hash(password),
+    )
     db.add(entity)
     await db.commit()
 
