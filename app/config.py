@@ -33,6 +33,7 @@ class Settings(BaseSettings):
     DB_POOL_RECYCLE: int = 1800
     SHOW_DOCS: bool = True
     CORS_ALLOWED_ORIGINS: str = "http://localhost:3000"
+    FRONTEND_URL: str = "http://localhost:3000"
 
     # SMTP
     PASSWORD_RESET_TOKEN_EXPIRE_MINUTES: int = 15
