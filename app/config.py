@@ -34,6 +34,19 @@ class Settings(BaseSettings):
     SHOW_DOCS: bool = True
     CORS_ALLOWED_ORIGINS: str = "http://localhost:3000"
 
+    # SMTP
+    PASSWORD_RESET_TOKEN_EXPIRE_MINUTES: int = 15
+    SMTP_HOST: str = "smtp-relay.brevo.com"
+    SMTP_PORT: int = 587
+    SMTP_USER: str | None = None
+    SMTP_PASSWORD: str | None = None
+    SMTP_FROM: str = "no-reply@ideateca.com"
+    SMTP_USE_TLS: bool = True
+    SMTP_USE_SSL: bool = False
+
+    # dev
+    EMAIL_DRY_RUN: bool = False
+
     model_config = SettingsConfigDict(
         env_file=".env.developement" if not IS_PRODUCTION else None,
         env_file_encoding="utf-8",
