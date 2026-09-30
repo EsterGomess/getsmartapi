@@ -1,10 +1,6 @@
 """ Schema package initialization file."""
 from app.schemas.auth import Token, TokenData, UserTokenSchema
-from app.schemas.password_reset import (
-    ForgotPasswordRequestSchema,
-    ResetPasswordRequestSchema,
-    MessageResponseSchema
-)
+
 from app.schemas.user import (
     UserCreateSchema,
     UserResponseCreateSchema,
@@ -13,7 +9,10 @@ from app.schemas.user import (
     UserLoginResponseSchema,
     UpdateEmailRequestSchema,
     UserReadSchema,
-    CustomerOut
+    CustomerOut,
+    ForgotUserPasswordRequestSchema,
+    ResetUserPasswordRequestSchema,
+    MessageResponseSchema
 )
 from app.schemas.note import (
     NoteReadSchema,
@@ -36,8 +35,8 @@ __all__ = [
     "Token",
     "TokenData",
     "UserTokenSchema",
-    "ForgotPasswordRequestSchema",
-    "ResetPasswordRequestSchema",
+    "ForgotUserPasswordRequestSchema",
+    "ResetUserPasswordRequestSchema",
     "UserCreateSchema",
     "UserResponseCreateSchema",
     "UserPasswordResetResponseSchema",
@@ -60,3 +59,4 @@ __all__ = [
     "UpdateEmailRequestSchema",
     "CustomerOut"
 ]
+
