@@ -1,4 +1,8 @@
 services:
+  db:
+    env_file: !override
+      - .env.development
+
   app:
     command:
       [
@@ -12,3 +16,5 @@ services:
       - ./scripts:/app/scripts
     environment:
       - ENV=development
+    env_file: !override
+      - .env.development
