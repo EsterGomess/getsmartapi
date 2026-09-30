@@ -6,7 +6,10 @@ from app.crud.user import (
     create_user,
     get_user_by_id,
     update_user_email,
-    update_user_password
+    update_user_password,
+    create_reset_token,
+    get_valid_token,
+    mark_token_used
 )
 from app.crud.note import (
     get_note_by_user_by_id,
@@ -18,8 +21,3 @@ from app.crud.note import (
     get_candidate_notes
 )
 from app.crud.note_link import sync_links_for_note
-from app.crud.password_reset_token import (
-    create_reset_token,
-    get_valid_token,
-    mark_token_used
-)
