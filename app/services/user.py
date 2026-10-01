@@ -129,7 +129,7 @@ async def request_password_reset(
     if user is not None:
         raw_token = await create_reset_token(db, user.id)
         await db.commit()
-        print(f"Password reset token for {user.email}: {raw_token}")  # For debugging purposes only
+
         background.add_task(
             send_password_reset_email,
             str(user.email),
