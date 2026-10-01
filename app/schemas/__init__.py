@@ -1,10 +1,18 @@
 """ Schema package initialization file."""
 from app.schemas.auth import Token, TokenData, UserTokenSchema
+
 from app.schemas.user import (
     UserCreateSchema,
     UserResponseCreateSchema,
+    UserPasswordResetResponseSchema,
     UserLoginSchema,
-    UserLoginResponseSchema
+    UserLoginResponseSchema,
+    UpdateEmailRequestSchema,
+    UserReadSchema,
+    CustomerOut,
+    ForgotUserPasswordRequestSchema,
+    ResetUserPasswordRequestSchema,
+    MessageResponseSchema
 )
 from app.schemas.note import (
     NoteReadSchema,
@@ -22,12 +30,16 @@ from app.schemas.notes_ai import (
     ConnectionSuggestion,
     SuggestionsSchema
 )
+
 __all__ = [
     "Token",
     "TokenData",
     "UserTokenSchema",
+    "ForgotUserPasswordRequestSchema",
+    "ResetUserPasswordRequestSchema",
     "UserCreateSchema",
     "UserResponseCreateSchema",
+    "UserPasswordResetResponseSchema",
     "UserLoginSchema",
     "UserLoginResponseSchema",
     "NoteReadSchema",
@@ -41,5 +53,10 @@ __all__ = [
     "NoteGraphSchema",
     "SuggestConnectionsRequest",
     "ConnectionSuggestion",
-    "SuggestionsSchema"
+    "SuggestionsSchema",
+    "MessageResponseSchema",
+    "UserReadSchema",
+    "UpdateEmailRequestSchema",
+    "CustomerOut"
 ]
+

@@ -36,7 +36,12 @@ async def db() -> AsyncGenerator[AsyncSession, None]:
 
 @pytest_asyncio.fixture
 async def user(db: AsyncSession) -> User:
-    u = User(username="testuser", hashed_password="x", is_active=True)
+    u = User(
+        username="testuser",
+        email="testuser@example.com",
+        hashed_password="x",
+        is_active=True,
+    )
     db.add(u)
     await db.commit()
     await db.refresh(u)
@@ -45,7 +50,12 @@ async def user(db: AsyncSession) -> User:
 
 @pytest_asyncio.fixture
 async def other_user(db: AsyncSession) -> User:
-    u = User(username="other", hashed_password="x", is_active=True)
+    u = User(
+        username="other",
+        email="other@example.com",
+        hashed_password="x",
+        is_active=True,
+    )
     db.add(u)
     await db.commit()
     await db.refresh(u)

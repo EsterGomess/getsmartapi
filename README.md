@@ -139,16 +139,14 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 Migrations are managed by Alembic. All commands must run **inside the container** or
 with the virtual environment active.
 
-### Apply pending migrations
+### Create and apply a new migration
 
 ```bash
-alembic upgrade head
+docker compose exec app alembic revision --autogenerate -m "describe your change"
 ```
 
-### Create a new migration
-
 ```bash
-alembic revision --autogenerate -m "describe your change"
+docker compose exec app alembic upgrade head
 ```
 
 > ⚠️ Always review the generated file in `alembic/versions/` before applying.
