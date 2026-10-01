@@ -18,7 +18,8 @@ class User(AuthenticatedEntity):
     id = Column(Integer, primary_key=True)
 
     username: Mapped[str] = mapped_column(unique=True, nullable=False)
-    email: Mapped[str | None] = mapped_column(String(254), nullable=True) # TODO:Making email non-nullable if required for your application logic.
+    email: Mapped[str | None] = mapped_column(String(254), unique=True,
+                                              nullable=True)  # TODO:Making email non-nullable after user completes email field in their profile. This will be enforced in the future.
     notes = relationship('Note',
                          back_populates='user',
                          cascade='all, delete-orphan')
