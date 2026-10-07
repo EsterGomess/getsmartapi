@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     CORS_ALLOWED_ORIGINS: str = "http://localhost:3000"
 
     model_config = SettingsConfigDict(
-        env_file=".env.developement" if not IS_PRODUCTION else None,
+        env_file=".env.development" if not IS_PRODUCTION else None,
         env_file_encoding="utf-8",
         extra="ignore",
     )
