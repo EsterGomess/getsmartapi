@@ -22,6 +22,18 @@ from app.schemas.notes_ai import (
     ConnectionSuggestion,
     SuggestionsSchema
 )
+from app.schemas.topic import (
+    TopicReadSchema,
+    TopicCreateSchema,
+    TopicUpdateSchema,
+    TopicListSchema,
+    TopicDeleteSchema,
+    TopicDeleteResponseSchema
+)
+from app.schemas.pagination import (
+    PaginationMeta,
+    PaginatedResponse
+)
 __all__ = [
     "Token",
     "TokenData",
@@ -41,5 +53,13 @@ __all__ = [
     "NoteGraphSchema",
     "SuggestConnectionsRequest",
     "ConnectionSuggestion",
-    "SuggestionsSchema"
+    "SuggestionsSchema",
+    "TopicReadSchema",
+    "TopicCreateSchema",
+    "TopicUpdateSchema",
+    "TopicListSchema",
+    "TopicDeleteSchema",
+    "TopicDeleteResponseSchema",
+    "PaginationMeta",
+    "PaginatedResponse"
 ]
