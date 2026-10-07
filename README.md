@@ -150,6 +150,12 @@ alembic upgrade head
 ```bash
 alembic revision --autogenerate -m "describe your change"
 ```
+```bash
+docker compose exec app alembic revision --autogenerate -m "describe your change"
+```
+```bash
+docker compose exec app alembic upgrade head
+```
 
 > ⚠️ Always review the generated file in `alembic/versions/` before applying.
 > Autogenerate doesn't detect every change (e.g., enum modifications, column renames).
