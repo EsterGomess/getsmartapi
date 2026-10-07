@@ -16,3 +16,11 @@ from app.crud.note import (
     get_candidate_notes
 )
 from app.crud.note_link import sync_links_for_note
+from app.crud.topic import (
+    get_topics_paginated_by_user,
+    create_topic,
+    delete_topic,
+    update_topic,
+    topic_name_exists_for_user,
+    get_topic_by_user_and_id
+)
