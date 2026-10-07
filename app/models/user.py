@@ -21,6 +21,7 @@ class User(AuthenticatedEntity):
     notes = relationship('Note',
                          back_populates='user',
                          cascade='all, delete-orphan')
+    topics: Mapped[list['Topic']] = relationship('Topic', back_populates='user')
 
     def __repr__(self) -> str:
         return f"<Username={self.username}>"
