@@ -5,7 +5,7 @@ class DomainError(Exception):
 
 
 class TopicNameAlreadyExistsError(DomainError):
-    """Raised when a topic name is already taken for the user."""
+    """Raised when a topic title is already taken for the user."""
 
 
 class TopicNotFoundError(DomainError):
