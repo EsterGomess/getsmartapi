@@ -12,7 +12,7 @@ from app.schemas.pagination import PaginationMeta
 class TopicWithNotesSchema(BaseSchema):
     """Schema for reading a topic."""
     id: int
-    name: Annotated[str, Field(examples=["My Topic"])]
+    title: Annotated[str, Field(examples=["My Topic"])]
     description: str | None = Field(default=None, examples=["This is a description of my topic."])
     created_at: datetime
     updated_at: datetime
@@ -21,19 +21,19 @@ class TopicWithNotesSchema(BaseSchema):
 
 class TopicCreateSchema(BaseSchema):
     """Payload for creating a topic."""
-    name: Annotated[str, Field(min_length=1, max_length=255, examples=["My Topic"])]
+    title: Annotated[str, Field(min_length=1, max_length=255, examples=["My Topic"])]
     description: str | None = Field(default=None, examples=["This is a description of my topic."])
 
 class TopicUpdateSchema(BaseSchema):
     """Payload for updating a topic."""
-    name: Annotated[str | None, Field(min_length=1, max_length=255, examples=["My Topic"])] = None
+    title: Annotated[str | None, Field(min_length=1, max_length=255, examples=["My Topic"])] = None
     description: str | None = Field(default=None, examples=["This is a description of my topic."])
     note_id: int | None = Field(default=None, examples=[1], description="The ID of the note to which this topic belongs.")
 
 class TopicReadSchema(BaseSchema):
     """Schema for listing topics."""
     id: int
-    name : Annotated[str, Field(examples=["My Topic"])]
+    title : Annotated[str, Field(examples=["My Topic"])]
     description: str | None = Field(default=None, examples=["This is a description of my topic."])
     created_at: datetime
     updated_at: datetime | None = Field(default=None, examples=[datetime.now()])
