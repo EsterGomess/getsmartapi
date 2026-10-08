@@ -1,10 +1,9 @@
 """CRUD operations for the Topic model."""
 from sqlalchemy import func, select, exists
-from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import delete
 
-from app.crud import get_note_by_user_by_id
+from app.crud.note import get_note_by_user_by_id
 from app.models import Topic
 
 
@@ -40,7 +39,7 @@ async def create_topic(
 ) -> Topic:
     """Create a new topic for a specific user."""
     topic = Topic(
-        name=payload.name,
+        title=payload.title,
         description=payload.description,
         user_id=user_id
     )
@@ -70,10 +69,10 @@ async def update_topic(
         topic_id: int,
         user_id: int,
         note_id: int | None = None,
-        name: str | None = None,
+        title: str | None = None,
         description: str | None = None
 ) -> Topic | None:
-    """Update a topic's name and/or description."""
+    """Update a topic's title and/or description."""
     result = await db.execute(
         select(Topic).where(Topic.id == topic_id, Topic.user_id == user_id)
     )
@@ -81,8 +80,8 @@ async def update_topic(
     if topic is None:
         return None
 
-    if name is not None:
-        topic.name = name
+    if title is not None:
+        topic.title = title
     if description is not None:
         topic.description = description
     if note_id is not None:
@@ -101,10 +100,10 @@ async def topic_name_exists_for_user(
         user_id: int,
         name: str,
 ) -> bool:
-    """Check whether a topic name already exists for the user."""
+    """Check whether a topic title already exists for the user."""
     result = await db.execute(
         select(
-            exists().where(Topic.user_id == user_id, Topic.name == name)
+            exists().where(Topic.user_id == user_id, Topic.title == name)
         )
     )
     return result.scalar_one()
@@ -118,5 +117,3 @@ async def get_topic_by_user_and_id(
         select(Topic).where(Topic.id == topic_id, Topic.user_id == user_id)
     )
     return result.scalar_one_or_none()
-
-
