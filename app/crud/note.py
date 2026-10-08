@@ -61,6 +61,7 @@ async def create_note(
         source=payload.source,
         note_type=payload.note_type,
         user_id=user_id,
+        topic_id=payload.topic_id
     )
 
     db.add(note)
@@ -86,12 +87,19 @@ async def update_note(
     if note is None:
         return None
 
+    if payload.topic_id is not None:
+        from app.crud.topic import get_topic_by_user_and_id
+        topic = await get_topic_by_user_and_id(db, topic_id=payload.topic_id, user_id=user_id)
+        if topic is None:
+            raise ValueError(f"Topic {payload.topic_id} not found for this user")
+
     update_data = payload.model_dump(exclude_unset=True)
     for field, value in update_data.items():
         setattr(note, field, value)
 
     await db.flush()  # emits UPDATE, keeps transaction open
     await sync_links_for_note(db, note)  # rebuilds note_links from content
+    await db.refresh(note)
     return note
 
 
