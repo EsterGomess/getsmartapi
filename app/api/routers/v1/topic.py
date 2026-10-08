@@ -18,7 +18,7 @@ from app.core.security import (
 )
 from app.models import APIClient, User
 
-router = APIRouter(prefix="/Topics", tags=["topics"])
+router = APIRouter(prefix="/topics", tags=["Topics"])
 
 
 @router.post(
