@@ -4,7 +4,12 @@ from app.crud.user import (
     get_registered_user,
     get_user_by_username,
     create_user,
-    get_user_by_id
+    get_user_by_id,
+    update_user_email,
+    update_user_password,
+    create_reset_token,
+    get_valid_token,
+    mark_token_used
 )
 from app.crud.note import (
     get_note_by_user_by_id,

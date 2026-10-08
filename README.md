@@ -139,16 +139,14 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 Migrations are managed by Alembic. All commands must run **inside the container** or
 with the virtual environment active.
 
-### Apply pending migrations
+### Create and apply a new migration
 
 ```bash
-alembic upgrade head
+docker compose exec app alembic revision --autogenerate -m "describe your change"
 ```
 
-### Create a new migration
-
 ```bash
-alembic revision --autogenerate -m "describe your change"
+docker compose exec app alembic upgrade head
 ```
 ```bash
 docker compose exec app alembic revision --autogenerate -m "describe your change"
@@ -377,3 +375,6 @@ The API uses **two independent JWT layers**:
                Authorization: Bearer <api_client_token>
                X-User-Token:  <user_token>
              ← { items, total, page, ... }
+```
+             
+<img width="1495" height="1060" alt="diagram" src="https://github.com/user-attachments/assets/b3773141-8d86-44d1-b507-f679a107708a" />

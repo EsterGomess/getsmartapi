@@ -61,15 +61,19 @@ class TestAuthenticate:
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    ("function", "model"),
+    ("function", "model", "extra_kwargs"),
     [
-        (auth.authenticate_api_client, APIClient),
-        (auth.authenticate_user, User),
+        (auth.authenticate_api_client, APIClient, {}),
+        (auth.authenticate_user, User, {"email": "alice@example.com"}),
     ],
 )
-async def test_authenticates_with_a_real_password_hash(db, function, model):
+async def test_authenticates_with_a_real_password_hash(db, function, model, extra_kwargs):
     password = "correct horse battery staple"
-    entity = model(username="alice", hashed_password=get_password_hash(password))
+    entity = model(
+        username="alice",
+        hashed_password=get_password_hash(password),
+        **extra_kwargs,
+    )
     db.add(entity)
     await db.commit()
 
