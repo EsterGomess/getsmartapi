@@ -1,13 +1,10 @@
 from math import ceil
 
-from app.crud import (
-    get_notes_paginated_by_user,
-    create_topic,
-    delete_topic,
-    update_topic,
-    topic_name_exists_for_user,
+from app.crud.note import get_notes_paginated_by_user
+from app.crud.topic import (
+    get_topic_by_user_and_id,
     get_topics_paginated_by_user,
-    get_topic_by_user_and_id
+    topic_name_exists_for_user
 )
 from app.crud.topic import create_topic as create_topic_crud
 from app.crud.topic import update_topic as update_topic_crud
@@ -15,7 +12,6 @@ from app.crud.topic import delete_topic as delete_topic_crud
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.exceptions import TopicNameAlreadyExistsError
-from app.models import Note
 from app.models.topic import Topic
 from app.schemas.topic import TopicCreateSchema, TopicUpdateSchema
 
@@ -28,11 +24,11 @@ async def create_topic(
     """Create a topic for a user.
 
     Raises:
-        TopicNameAlreadyExistsError: if the user already has a topic with that name.
+        TopicNameAlreadyExistsError: if the user already has a topic with that title.
     """
-    if await topic_name_exists_for_user(db, user_id, payload.name):
+    if await topic_name_exists_for_user(db, user_id, payload.title):
         raise TopicNameAlreadyExistsError(
-            f"Topic '{payload.name}' already exists."
+            f"Topic '{payload.title}' already exists."
         )
 
     topic = await create_topic_crud(db, user_id=user_id, payload=payload)
@@ -79,7 +75,7 @@ async def get_topic_with_notes(
     )
     return {
         "id": topic.id,
-        "name": topic.name,
+        "title": topic.title,
         "description": topic.description,
         "created_at": topic.created_at,
         "updated_at": topic.updated_at,
@@ -93,16 +89,20 @@ async def get_topic_with_notes(
     }
 
 
-async def update_topic(db: AsyncSession, user_id: int, payload: TopicUpdateSchema, topic_id: int) -> Topic:
+async def update_topic(db: AsyncSession,
+                       user_id: int,
+                       payload: TopicUpdateSchema,
+                       topic_id: int):
     """Update a topic for a user."""
     response = await update_topic_crud(
         db,
         user_id=user_id,
         topic_id=topic_id,
-        name=payload.name,
+        name=payload.title,
         note_id=payload.note_id,
         description=payload.description)
     return response
+
 
 async def delete_topic(db: AsyncSession, topic_id: int, user_id: int) -> bool:
     """Delete a topic for a user."""
