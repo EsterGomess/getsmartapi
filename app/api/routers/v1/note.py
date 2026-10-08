@@ -55,6 +55,10 @@ async def create_note(
         user_id=user.id,
         payload=payload,
     )
+    await db.commit()
+    await db.refresh(note)
+
+    logger.info("note_created", user_id=user.id, note_id=note.id)
     return NoteReadSchema.model_validate(note)
 
 
@@ -144,6 +148,7 @@ async def update_note(
         note_id=note_id,
         payload=payload,
     )
+    await db.commit()
     return NoteReadSchema.model_validate(note)
 
 

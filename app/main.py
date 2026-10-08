@@ -11,7 +11,8 @@ from app.config import settings
 from app.core.logging import setup_logging
 from app.middleware.logging import log_requests
 from app.api.routers.v1 import (
-    auth_router, customer_auth_router, note_router)
+    auth_router, customer_auth_router,
+    note_router, topic_router)
 
 IS_PRODUCTION = settings.ENV.lower() == "production"
 DOCS_URL = "/docs" if settings.SHOW_DOCS else None
@@ -44,3 +45,4 @@ async def health():
 app.include_router(auth_router,prefix="/api/v1",)
 app.include_router(customer_auth_router,prefix="/api/v1",)
 app.include_router(note_router,prefix="/api/v1",)
+app.include_router(topic_router,prefix="/api/v1",)

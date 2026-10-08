@@ -1,6 +1,7 @@
 """ This module defines the Note and NoteLink models for the application."""
 from datetime import datetime
 from enum import Enum as PyEnum
+import sqlalchemy as sa
 
 from sqlalchemy import (
     Column,
@@ -9,7 +10,7 @@ from sqlalchemy import (
     DateTime,
     func,
     Enum as SAEnum,
-    UniqueConstraint, CheckConstraint)
+    UniqueConstraint, CheckConstraint, Index)
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from app.models import Base, User
 
@@ -35,6 +36,9 @@ note_type = Column(
 class Note(Base):
     """A note created by a user."""
     __tablename__ = 'notes'
+    __table_args__ = (
+        Index('ix_notes_topic_created', 'topic_id', sa.desc('created_at'), sa.desc('id')),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(255))
@@ -73,6 +77,13 @@ class Note(Base):
         DateTime(timezone=True),
         server_default=func.now(),
         onupdate=func.now())
+
+    topic_id: Mapped[int | None] = mapped_column(
+        ForeignKey('topics.id', ondelete='SET NULL'),
+        nullable=True,
+        index=True,
+    )
+    topic: Mapped['Topic | None'] = relationship('Topic', back_populates='notes')
 
     def __repr__(self) -> str:
         return f"<Note id={self.id} title={self.title}>"

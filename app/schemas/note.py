@@ -17,6 +17,7 @@ class NoteReadSchema(BaseSchema):
     user_id: int
     created_at: datetime
     updated_at: datetime
+    topic_id: int | None = Field(None, examples=[1])
 
 
 class NotesPageSchema(BaseSchema):
@@ -47,6 +48,7 @@ class NoteReadDetailedSchema(BaseSchema):
     updated_at: datetime
     outgoing_links: list[NoteLinkReadSchema] = []
     incoming_links: list[NoteLinkReadSchema] = []
+    topic_id: int | None = Field(None, examples=[1])
 
 
 class NoteCreateSchema(BaseSchema):
@@ -55,6 +57,7 @@ class NoteCreateSchema(BaseSchema):
     content: str = Field(..., min_length=1, examples=["This is the content of my note."])
     source: str | None = Field(None, max_length=255, examples=["https://example.com"])
     note_type: NoteType = NoteType.PERMANENT
+    topic_id: int | None = Field(None, examples=[1])
 
 
 class NoteUpdateSchema(BaseSchema):
@@ -62,6 +65,7 @@ class NoteUpdateSchema(BaseSchema):
     title: str | None = Field(None, min_length=1, max_length=255, examples=["Updated Note Title"])
     content: str | None = Field(None, min_length=1, examples=["This is the updated content of my note."])
     source: str | None = Field(None, max_length=255, examples=["https://updated-example.com"])
+    topic_id: int | None = Field(None, examples=[1])
     note_type: NoteType | None = None
 
 

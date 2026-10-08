@@ -11,7 +11,9 @@ from pwdlib import PasswordHash
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import settings
-from app.crud import get_api_client_by_username, get_user_by_id
+from app.crud.user import get_user_by_id
+from app.crud.api_client import get_api_client_by_username
+
 from app.database import get_session
 from app.models import APIClient, User
 from app.schemas import TokenData

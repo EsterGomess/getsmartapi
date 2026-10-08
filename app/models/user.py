@@ -28,6 +28,7 @@ class User(AuthenticatedEntity):
         back_populates="user",
         cascade="all, delete-orphan",
     )
+    topics: Mapped[list['Topic']] = relationship('Topic', back_populates='user')
 
     def set_email(self, email: str) -> None:
         """Normalize and set the user's email address."""
