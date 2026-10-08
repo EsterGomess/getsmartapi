@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 import structlog
 from starlette import status
 
-from app.crud import (
+from app.crud.note import (
     get_notes_paginated_by_user,
     get_note_by_user_by_id,
     create_note,
@@ -14,6 +14,8 @@ from app.crud import (
     delete_note,
     get_graph_for_user
 )
+from app.models import Note
+
 from app.schemas import (
     NoteCreateSchema,
     NoteReadSchema,
@@ -76,7 +78,7 @@ async def create_note_for_user(
         db: AsyncSession,
         user_id: int,
         payload: NoteCreateSchema,
-) -> NoteReadSchema:
+) -> Note | None:
     """
     Create a new note for a specific user.
     :param db: The payload base session.
@@ -86,11 +88,8 @@ async def create_note_for_user(
     logger.info("creating_note", user_id=user_id)
 
     note = await create_note(db=db, user_id=user_id, payload=payload)
-    await db.commit()
-    await db.refresh(note)
 
-    logger.info("note_created", user_id=user_id, note_id=note.id)
-    return NoteReadSchema.model_validate(note)
+    return note
 
 
 async def update_note_for_user(
@@ -98,7 +97,7 @@ async def update_note_for_user(
         user_id: int,
         note_id: int,
         payload: NoteUpdateSchema,
-) -> NoteReadSchema:
+) -> Note | None:
     """
     Update an existing note for a specific user.
     :param db: The payload base session.
@@ -106,25 +105,27 @@ async def update_note_for_user(
     :param note_id: The ID of the note to update.
     :param payload: The note update payload.
     :return: The updated note."""
-    logger.info("updating_note", user_id=user_id, note_id=note_id)
-
-    note = await update_note(
+    logger.info("updating_note", user_id=user_id, note_id=note_id, payload=payload.dict())
+    try:
+        note = await update_note(
         db=db,
         user_id=user_id,
         note_id=note_id,
-        payload=payload,
+        payload=payload
     )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e),
+        )
+
     if note is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Note not found",
         )
 
-    await db.commit()
-    await db.refresh(note)
-
-    logger.info("note_updated", user_id=user_id, note_id=note.id)
-    return NoteReadSchema.model_validate(note)
+    return note
 
 async def delete_note_for_user(
     db: AsyncSession,
